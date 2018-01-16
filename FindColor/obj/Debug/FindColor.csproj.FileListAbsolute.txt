@@ -8,3 +8,13 @@ D:\Appliations\FindColor\FindColor\bin\Debug\FindColor.exe
 D:\Appliations\FindColor\FindColor\bin\Debug\FindColor.pdb
 D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.exe
 D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.pdb
+D:\Applications\FindColor\FindColor\bin\Debug\FindColor.exe.config
+D:\Applications\FindColor\FindColor\bin\Debug\FindColor.exe
+D:\Applications\FindColor\FindColor\bin\Debug\FindColor.pdb
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.csprojResolveAssemblyReference.cache
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.Form1.resources
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.Properties.Resources.resources
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.csproj.GenerateResource.Cache
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.csproj.CoreCompileInputs.cache
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.exe
+D:\Applications\FindColor\FindColor\obj\Debug\FindColor.pdb

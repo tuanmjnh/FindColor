@@ -16,7 +16,23 @@ namespace FindColor
         public Form1()
         {
             InitializeComponent();
-            btnGetColor.KeyDown += new KeyEventHandler(btnGetColor_KeyShort);
+            //
+            LoadResources();
+            //
+            tmrGetColor.Tick += new System.EventHandler(tmrGetColor_Tick);
+            tmrFindingColor.Tick += new System.EventHandler(tmrFindingColor_Tick);
+            //
+            btnGetColor.Click += new System.EventHandler(btnGetColor_Click);
+            btnFindingColor.Click += new System.EventHandler(btnRun_Click);
+            lblSound.Click += new System.EventHandler(lblSound_Click);
+            btnPlaySound.Click += new System.EventHandler(btnPlaySound_Click);
+            //
+            btnGetColor.KeyDown += new KeyEventHandler(action_KeyDown);
+            btnFindingColor.KeyDown += new KeyEventHandler(action_KeyDown);
+            txtHexColor.KeyDown += new KeyEventHandler(action_KeyDown);
+            //
+            lblHelp.ForeColor = Color.Red;
+            lblHelp.Text = "";
         }
         //This is a replacement for Cursor.Position in WinForms
         [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -28,49 +44,31 @@ namespace FindColor
         public const int MOUSEEVENTF_LEFTDOWN = 0x02;
         public const int MOUSEEVENTF_LEFTUP = 0x04;
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //Point[] points = FindColor(HexToRGB("#2D2D30"));
-            Point[] points = FindColor(txtHexColor.Text.Trim('#'));
-            if (points.Length > 0)
-            {
-                foreach (var i in points)
-                {
-                    SetCursorPos(i.X, i.Y);
-                    mouse_event(MOUSEEVENTF_LEFTDOWN, i.X, i.Y, 0, 0);
-                    System.Threading.Thread.Sleep(5000);
-                }
-            }
-            else
-                MessageBox.Show("No Color!");
-        }
         private void btnGetColor_Click(object sender, EventArgs e)
         {
-            GetColor();
-        }
-        private void btnGetColor_KeyShort(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-                GetColor();
+            StartGetColor();
         }
         private void GetColor()
         {
-            Timer.Interval = 100;
-            lblHelpSelectColor.ForeColor = Color.Red;
-            if (Timer.Enabled)
-            {
-                Timer.Stop();
-                Timer.Enabled = false;
-                lblHelpSelectColor.Text = "";
-            }
+            tmrGetColor.Interval = 100;
+            if (tmrGetColor.Enabled)
+                StopGetColor();
             else
-            {
-                Timer.Start();
-                Timer.Enabled = true;
-                lblHelpSelectColor.Text = "Press F5 to select Color!";
-            }
+                StartGetColor();
         }
-        private void Timer_Tick(object sender, EventArgs e)
+        private void StartGetColor()
+        {
+            tmrGetColor.Start();
+            tmrGetColor.Enabled = true;
+            lblHelp.Text = "Press F5 to select Color!";
+        }
+        private void StopGetColor()
+        {
+            tmrGetColor.Stop();
+            tmrGetColor.Enabled = false;
+            lblHelp.Text = "";
+        }
+        private void tmrGetColor_Tick(object sender, EventArgs e)
         {
             List<Point> result = new List<Point>();
             var bmp = new Bitmap(1, 1);
@@ -80,7 +78,7 @@ namespace FindColor
             }
             var pixel = bmp.GetPixel(0, 0);
             imgHexColor.BackColor = pixel;
-            txtHexColor.Text = RGBToHex(pixel);
+            txtHexColor.Text = Common.Images.RGBToHex(pixel);
             //var p = new Point();
             //p.X = (this.Width / 2) - (label1.Width / 2);
             //p.Y = label1.Top;
@@ -88,116 +86,122 @@ namespace FindColor
 
             //MessageBox.Show(Timer.ToString());
         }
-        private static string RGBToHex(Color color)
+        private void btnRun_Click(object sender, EventArgs e)
         {
-            string hex = color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
-            //string hex = string.Format("0x{0:8x}", color);
-            return hex;
+            FindingColor();
         }
-        private static Color HexToRGB(string ColorHex = "#FFFFFF00")
+        private void action_KeyDown(object sender, KeyEventArgs e)
         {
-            int argb = Int32.Parse(ColorHex.Replace("#", ""), System.Globalization.NumberStyles.HexNumber);
-            return Color.FromArgb(argb);
-        }
-        private static Bitmap GetScreenShot()
-        {
-            Bitmap result = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            if (e.KeyCode == Keys.F5)
             {
-                using (Graphics gfx = Graphics.FromImage(result))
+                StopFindingColor();
+                GetColor();
+            }
+            else if (e.KeyCode == Keys.F6)
+            {
+                StopGetColor();
+                FindingColor();
+            }
+        }
+        private void FindingColor()
+        {
+            tmrFindingColor.Interval = 5000;
+            if (tmrFindingColor.Enabled)
+                StopFindingColor();
+            else
+                StartFindingColor();
+        }
+        private void StartFindingColor()
+        {
+            if (string.IsNullOrEmpty(txtHexColor.Text))
+            {
+                lblHelp.Text = "Set Hex color first, please!";
+                txtHexColor.Focus();
+                return;
+            }
+            lblHelp.Text = "Finding....";
+            btnGetColor.Enabled = false;
+            tmrFindingColor.Start();
+            tmrFindingColor.Enabled = true;
+        }
+        private void StopFindingColor()
+        {
+            btnGetColor.Enabled = true;
+            tmrFindingColor.Stop();
+            tmrFindingColor.Enabled = false;
+        }
+        private void tmrFindingColor_Tick(object sender, EventArgs e)
+        {
+            //Point[] points = FindColor(HexToRGB("#2D2D30"));
+            Point[] points = Common.Images.FindColor(txtHexColor.Text.Trim('#'));
+            if (points.Length > 0)
+            {
+
+                SetCursorPos(points[0].X, points[0].Y);
+                mouse_event(MOUSEEVENTF_LEFTDOWN, points[0].X, points[0].Y, 0, 0);
+
+                //foreach (var i in points)
+                //{
+                //    SetCursorPos(i.X, i.Y);
+                //    mouse_event(MOUSEEVENTF_LEFTDOWN, i.X, i.Y, 0, 0);
+                //}
+            }
+            else
+                MessageBox.Show("No Color!");
+        }
+        private void lblSound_Click(object sender, EventArgs e)
+        {
+            DialogResult result = ofdMain.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                try
                 {
-                    gfx.CopyFromScreen(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
+                    string file = ofdMain.FileName;
+
+                }
+                catch (Exception ex)
+                {
+                    lblHelp.Text = ex.Message;
                 }
             }
-            return result;
         }
-        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        private void btnPlaySound_Click(object sender, EventArgs e)
         {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
+            var sound = Properties.Resources.AlertSound;
+            var SoundPlayer = new System.Media.SoundPlayer(sound);
+            var checkPlay = false;
+            if (checkPlay)
+                StopPlaySoundr(SoundPlayer, checkPlay);
+            else
+                StartPlaySoundr(SoundPlayer, checkPlay);
         }
-        private static Point[] FindColor(string HexColor)
+        private void StartPlaySoundr(System.Media.SoundPlayer SoundPlayer, bool checkPlay)
         {
-            List<Point> result = new List<Point>();
-            using (Bitmap bmp = GetScreenShot())
-            {
-                ////Image i = (Image)bmp;
-                //var jpgEncoder = GetEncoder(ImageFormat.Bmp);
-
-                //// Create an Encoder object based on the GUID  
-                //// for the Quality parameter category.  
-                //var myEncoder = System.Drawing.Imaging.Encoder.Quality;
-                //var myEncoderParameters = new EncoderParameters(1);
-                //var myEncoderParameter = new EncoderParameter(myEncoder, 50L);
-                //myEncoderParameters.Param[0] = myEncoderParameter;
-
-                //bmp.Save("test.jpg", jpgEncoder, myEncoderParameters);
-                for (int x = 0; x < bmp.Width; x++)
-                {
-                    for (int y = 0; y < bmp.Height; y++)
-                    {
-                        if (HexColor == RGBToHex(bmp.GetPixel(x, y)))
-                            result.Add(new Point(x, y));
-                    }
-                }
-            }
-            return result.ToArray();
+            checkPlay = true;
+            SoundPlayer.Play();
         }
-        //private static Point[] FindColor(Color color)
-        //{
-        //    int searchValue = color.ToArgb();
-        //    List<Point> result = new List<Point>();
-        //    var s = new List<string>();
-        //    using (Bitmap bmp = GetScreenShot())
-        //    {
-        //        //Image i = (Image)bmp;
-        //        var jpgEncoder = GetEncoder(ImageFormat.Bmp);
-
-        //        // Create an Encoder object based on the GUID  
-        //        // for the Quality parameter category.  
-        //        var myEncoder = System.Drawing.Imaging.Encoder.Quality;
-        //        var myEncoderParameters = new EncoderParameters(1);
-        //        var myEncoderParameter = new EncoderParameter(myEncoder, 50L);
-        //        myEncoderParameters.Param[0] = myEncoderParameter;
-
-        //        bmp.Save("test.jpg", jpgEncoder, myEncoderParameters);
-        //        for (int x = 0; x < bmp.Width; x++)
-        //        {
-        //            for (int y = 0; y < bmp.Height; y++)
-        //            {
-        //                var tmp = RGBToHex(bmp.GetPixel(x, y));
-        //                s.Add(tmp);
-        //                if (searchValue.Equals(bmp.GetPixel(x, y).ToArgb()))
-        //                    result.Add(new Point(x, y));
-        //            }
-        //        }
-        //    }
-        //    return result.ToArray();
-        //}
-        public static Image GrayScale(Image Img)
+        private void StopPlaySoundr(System.Media.SoundPlayer SoundPlayer, bool checkPlay)
         {
-            var imageStream = new System.IO.MemoryStream();
-            using (Bitmap bmp = new Bitmap(Img))
+            checkPlay = false;
+            SoundPlayer.Stop();
+        }
+        private void LoadResources()
+        {
+            var MyIni = new Common.IniFile("Settings.ini");
+            if (System.IO.File.Exists(MyIni.ToString()))
             {
-                int rgb;
-                Color c;
 
-                for (int y = 0; y < bmp.Height; y++)
-                    for (int x = 0; x < bmp.Width; x++)
-                    {
-                        c = bmp.GetPixel(x, y);
-                        rgb = (int)((c.R + c.G + c.B) / 3);
-                        bmp.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
-                    }
-                bmp.Save(imageStream, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
-            return Image.FromStream(imageStream);
+            else
+            {
+                MyIni.Write("tm", "tuanmjnh");
+            }
+            //MessageBox.Show("Not Settings File!");
+        }
+        private Dictionary<string, string> SettingDefault()
+        {
+            var rs = new Dictionary<string, string>();
+            rs.Add
         }
     }
 }
