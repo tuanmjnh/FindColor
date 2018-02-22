@@ -8,8 +8,8 @@ namespace FindColor.Common
 {
     public class IniFile   // revision 11
     {
-        string Path;
-        string EXE = Assembly.GetExecutingAssembly().GetName().Name;
+        public string Path;
+        public string EXE = Assembly.GetExecutingAssembly().GetName().Name;
 
         [DllImport("kernel32", CharSet = CharSet.Unicode)]
         static extern long WritePrivateProfileString(string Section, string Key, string Value, string FilePath);
@@ -20,7 +20,6 @@ namespace FindColor.Common
         public IniFile(string IniPath = null)
         {
             Path = new FileInfo(IniPath ?? EXE + ".ini").FullName.ToString();
-
         }
 
         public string Read(string Key, string Section = null)

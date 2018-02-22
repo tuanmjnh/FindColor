@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FindColor.Common
@@ -19,8 +17,12 @@ namespace FindColor.Common
         }
         public static Color HexToRGB(string ColorHex = "#FFFFFF00")
         {
-            int argb = Int32.Parse(ColorHex.Replace("#", ""), System.Globalization.NumberStyles.HexNumber);
-            return Color.FromArgb(argb);
+            int r, g, b;
+            int num = (int)long.Parse(ColorHex, System.Globalization.NumberStyles.HexNumber);
+            r = (num & 0xFF0000) >> 16;
+            g = (num & 0xFF00) >> 8;
+            b = num & 0xFF;
+            return Color.FromArgb(r,g,b);
         }
         public static Bitmap GetScreenShot()
         {

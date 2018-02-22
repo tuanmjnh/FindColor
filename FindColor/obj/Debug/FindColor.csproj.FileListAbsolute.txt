@@ -1,5 +1,4 @@
 D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.csprojResolveAssemblyReference.cache
-D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.Form1.resources
 D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.Properties.Resources.resources
 D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.csproj.GenerateResource.Cache
 D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.csproj.CoreCompileInputs.cache
@@ -18,3 +17,7 @@ D:\Applications\FindColor\FindColor\obj\Debug\FindColor.csproj.GenerateResource.
 D:\Applications\FindColor\FindColor\obj\Debug\FindColor.csproj.CoreCompileInputs.cache
 D:\Applications\FindColor\FindColor\obj\Debug\FindColor.exe
 D:\Applications\FindColor\FindColor\obj\Debug\FindColor.pdb
+D:\Appliations\FindColor\FindColor\obj\Debug\Interop.WMPLib.dll
+D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.csproj.ResolveComReference.cache
+D:\Appliations\FindColor\FindColor\obj\Debug\FindColor.FindColor.resources
+D:\Appliations\FindColor\FindColor\bin\Debug\Interop.WMPLib.dll
