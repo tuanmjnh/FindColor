@@ -48,9 +48,9 @@
             // 
             // btnFindingColor
             // 
-            this.btnFindingColor.Location = new System.Drawing.Point(197, 176);
+            this.btnFindingColor.Location = new System.Drawing.Point(356, 113);
             this.btnFindingColor.Name = "btnFindingColor";
-            this.btnFindingColor.Size = new System.Drawing.Size(75, 34);
+            this.btnFindingColor.Size = new System.Drawing.Size(80, 35);
             this.btnFindingColor.TabIndex = 0;
             this.btnFindingColor.Text = "Run/Stop (F8)";
             this.btnFindingColor.UseVisualStyleBackColor = true;
@@ -59,7 +59,7 @@
             // 
             this.txtHexColor.Location = new System.Drawing.Point(77, 12);
             this.txtHexColor.Name = "txtHexColor";
-            this.txtHexColor.Size = new System.Drawing.Size(195, 20);
+            this.txtHexColor.Size = new System.Drawing.Size(105, 20);
             this.txtHexColor.TabIndex = 1;
             // 
             // label1
@@ -73,9 +73,9 @@
             // 
             // btnGetColor
             // 
-            this.btnGetColor.Location = new System.Drawing.Point(12, 176);
+            this.btnGetColor.Location = new System.Drawing.Point(98, 113);
             this.btnGetColor.Name = "btnGetColor";
-            this.btnGetColor.Size = new System.Drawing.Size(81, 34);
+            this.btnGetColor.Size = new System.Drawing.Size(80, 35);
             this.btnGetColor.TabIndex = 0;
             this.btnGetColor.Text = "Get Color (F5)";
             this.btnGetColor.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             // imgHexColor
             // 
             this.imgHexColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgHexColor.Location = new System.Drawing.Point(12, 38);
+            this.imgHexColor.Location = new System.Drawing.Point(12, 47);
             this.imgHexColor.Name = "imgHexColor";
             this.imgHexColor.Size = new System.Drawing.Size(170, 50);
             this.imgHexColor.TabIndex = 3;
@@ -92,7 +92,7 @@
             // lblHelp
             // 
             this.lblHelp.AutoSize = true;
-            this.lblHelp.Location = new System.Drawing.Point(9, 151);
+            this.lblHelp.Location = new System.Drawing.Point(267, 15);
             this.lblHelp.Name = "lblHelp";
             this.lblHelp.Size = new System.Drawing.Size(39, 13);
             this.lblHelp.TabIndex = 4;
@@ -101,26 +101,26 @@
             // lblSound
             // 
             this.lblSound.AllowDrop = true;
-            this.lblSound.Location = new System.Drawing.Point(9, 103);
+            this.lblSound.Location = new System.Drawing.Point(204, 47);
             this.lblSound.Name = "lblSound";
-            this.lblSound.Size = new System.Drawing.Size(173, 41);
+            this.lblSound.Size = new System.Drawing.Size(170, 50);
             this.lblSound.TabIndex = 5;
             this.lblSound.Text = "lblSound";
             // 
             // btnPlaySound
             // 
-            this.btnPlaySound.Location = new System.Drawing.Point(106, 176);
+            this.btnPlaySound.Location = new System.Drawing.Point(270, 113);
             this.btnPlaySound.Name = "btnPlaySound";
-            this.btnPlaySound.Size = new System.Drawing.Size(75, 34);
+            this.btnPlaySound.Size = new System.Drawing.Size(80, 35);
             this.btnPlaySound.TabIndex = 6;
             this.btnPlaySound.Text = "Play Sound (F7)";
             this.btnPlaySound.UseVisualStyleBackColor = true;
             // 
             // btnSelectSound
             // 
-            this.btnSelectSound.Location = new System.Drawing.Point(197, 103);
+            this.btnSelectSound.Location = new System.Drawing.Point(184, 113);
             this.btnSelectSound.Name = "btnSelectSound";
-            this.btnSelectSound.Size = new System.Drawing.Size(75, 41);
+            this.btnSelectSound.Size = new System.Drawing.Size(80, 35);
             this.btnSelectSound.TabIndex = 7;
             this.btnSelectSound.Text = "Select Sound (F6)";
             this.btnSelectSound.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label2.Location = new System.Drawing.Point(74, 223);
+            this.label2.Location = new System.Drawing.Point(9, 165);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(127, 13);
             this.label2.TabIndex = 8;
@@ -137,17 +137,18 @@
             // 
             // btnColorDialog
             // 
-            this.btnColorDialog.Location = new System.Drawing.Point(197, 38);
+            this.btnColorDialog.Location = new System.Drawing.Point(12, 113);
             this.btnColorDialog.Name = "btnColorDialog";
-            this.btnColorDialog.Size = new System.Drawing.Size(75, 50);
+            this.btnColorDialog.Size = new System.Drawing.Size(80, 35);
             this.btnColorDialog.TabIndex = 9;
             this.btnColorDialog.Text = "Color (F4)";
+            this.btnColorDialog.UseVisualStyleBackColor = true;
             // 
             // FindColor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 252);
+            this.ClientSize = new System.Drawing.Size(449, 187);
             this.Controls.Add(this.btnColorDialog);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnSelectSound);

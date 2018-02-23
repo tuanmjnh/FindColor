@@ -128,6 +128,7 @@ namespace FindColor
                 txtHexColor.Text = Common.Images.RGBToHex(color);
                 imgHexColor.BackColor = color;
                 IniSetting.Write("Color", txtHexColor.Text);
+                SetDefaultSetting();
             }
         }
         private void StartGetColor()
@@ -142,6 +143,7 @@ namespace FindColor
             tmrGetColor.Enabled = false;
             lblHelp.Text = "";
             IniSetting.Write("Color", txtHexColor.Text);
+            SetDefaultSetting();
         }
         private void tmrGetColor_Tick(object sender, EventArgs e)
         {
@@ -163,6 +165,7 @@ namespace FindColor
         }
         private void StartFindingColor()
         {
+            StopPlaySound();
             if (string.IsNullOrEmpty(txtHexColor.Text))
             {
                 lblHelp.Text = "Set Hex color first, please!";
@@ -171,6 +174,7 @@ namespace FindColor
             }
             lblHelp.Text = "Finding...";
             txtHexColor.Enabled = false;
+            btnColorDialog.Enabled = false;
             btnGetColor.Enabled = false;
             btnSelectSound.Enabled = false;
             btnPlaySound.Enabled = false;
@@ -182,6 +186,7 @@ namespace FindColor
         {
             lblHelp.Text = "";
             txtHexColor.Enabled = true;
+            btnColorDialog.Enabled = true;
             btnGetColor.Enabled = true;
             btnSelectSound.Enabled = true;
             btnPlaySound.Enabled = true;
@@ -213,7 +218,7 @@ namespace FindColor
             openFileDialog.Filter = "audio files (*.wav;*.mp3)|*.wav;*.mp3";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = false;
-
+            StopPlaySound();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -221,6 +226,7 @@ namespace FindColor
                     string file = openFileDialog.FileName;
                     IniSetting.Write("Sound", file);
                     lblSound.Text = file;
+                    SetDefaultSetting();
                 }
                 catch (Exception ex)
                 {
@@ -262,31 +268,31 @@ namespace FindColor
             //
             this.StartPosition = FormStartPosition.CenterScreen;
             //btnColorDialog
-            btnColorDialog.BackColor = SystemColors.Highlight;
+            btnColorDialog.BackColor = Color.DodgerBlue;
             btnColorDialog.FlatAppearance.BorderSize = 0;
             btnColorDialog.FlatStyle = FlatStyle.Flat;
             btnColorDialog.ForeColor = Color.White;
             btnColorDialog.UseVisualStyleBackColor = false;
             //btnGetColor
-            btnGetColor.BackColor = SystemColors.Highlight;
+            btnGetColor.BackColor = Color.DodgerBlue;
             btnGetColor.FlatAppearance.BorderSize = 0;
             btnGetColor.FlatStyle = FlatStyle.Flat;
             btnGetColor.ForeColor = Color.White;
             btnGetColor.UseVisualStyleBackColor = false;
             //btnFindingColor
-            btnFindingColor.BackColor = SystemColors.Highlight;
+            btnFindingColor.BackColor = Color.DodgerBlue;
             btnFindingColor.FlatAppearance.BorderSize = 0;
             btnFindingColor.FlatStyle = FlatStyle.Flat;
             btnFindingColor.ForeColor = Color.White;
             btnFindingColor.UseVisualStyleBackColor = false;
             //btnSelectSound
-            btnSelectSound.BackColor = SystemColors.Highlight;
+            btnSelectSound.BackColor = Color.DodgerBlue;
             btnSelectSound.FlatAppearance.BorderSize = 0;
             btnSelectSound.FlatStyle = FlatStyle.Flat;
             btnSelectSound.ForeColor = Color.White;
             btnSelectSound.UseVisualStyleBackColor = false;
             //btnPlaySound
-            btnPlaySound.BackColor = SystemColors.Highlight;
+            btnPlaySound.BackColor = Color.DodgerBlue;
             btnPlaySound.FlatAppearance.BorderSize = 0;
             btnPlaySound.FlatStyle = FlatStyle.Flat;
             btnPlaySound.ForeColor = Color.White;
